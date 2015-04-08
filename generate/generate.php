@@ -65,11 +65,13 @@ foreach ($tables as $table) {
 	$currentTemplate = str_replace('{{class}}', $className, $currentTemplate);
 
 	file_put_contents($config['model_dir'].'/'.$className.'.php', $currentTemplate);
+	echo "Created: ".$className.".php\n";
 
 	$currentTemplate = str_replace('{{namespace}}', $namespace, $collectionTemplate);
 	$currentTemplate = str_replace('{{pluralClass}}', $pluralClass, $currentTemplate);
 	$currentTemplate = str_replace('{{class}}', $className, $currentTemplate);
-
+	
 	file_put_contents($config['model_dir'].'/'.$pluralClass.'.php', $currentTemplate);
+	echo "Created: ".$pluralClass.".php\n";
 }
 ?>
