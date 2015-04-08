@@ -10,6 +10,7 @@ $tables = $result->fetchAll(PDO::FETCH_NUM);
 $namespace = (isset($config['namespace']) ? $config['namespace']."\\" : '');
 
 $classTemplate = file_get_contents(__DIR__.'/class.tpl');
+$collectionTemplate = file_get_contents(__DIR__.'/collection.tpl');
 
 foreach ($tables as $table) {
 	$tableName = $table[0];
@@ -24,6 +25,8 @@ foreach ($tables as $table) {
 		}
 		$className = rtrim(implode('', $classParts), 's');
 	}
+
+	$pluralClass = $className.'s';
 
 	$result = $pdo->query('DESCRIBE '.$tableName);
 	$columns = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -62,5 +65,11 @@ foreach ($tables as $table) {
 	$currentTemplate = str_replace('{{class}}', $className, $currentTemplate);
 
 	file_put_contents($config['model_dir'].'/'.$className.'.php', $currentTemplate);
+
+	$currentTemplate = str_replace('{{namespace}}', $namespace, $collectionTemplate);
+	$currentTemplate = str_replace('{{pluralClass}}', $pluralClass, $currentTemplate);
+	$currentTemplate = str_replace('{{class}}', $className, $currentTemplate);
+
+	file_put_contents($config['model_dir'].'/'.$pluralClass.'.php', $currentTemplate);
 }
 ?>
