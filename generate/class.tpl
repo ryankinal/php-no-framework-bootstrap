@@ -1,7 +1,7 @@
 <?php
 namespace {{namespace}}Model;
 
-class {{class}} extends DBRecord
+class {{class}} extends \stORM\DBRecord
 {
 	$columns = array(
 		{{columns}}
